@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/root.json",
+    "type": "object",
+    "title": "User profiles properties sync mapping",
+    "required": [
+        "UserProperties"
+    ],
+    "definitions": {
+        "PropertyItem": {
+            "$id": "#/definitions/PropertyItem",
+            "type": "object",
+            "title": "Property name",
+            "properties": {
+                "Name": {
+                    "type": "string",
+                    "title": "Property Name"
+                },
+                "Enabled": {
+                    "type": "boolean",
+                    "title": "Enabled for sync",
+                    "description": "If property if Enabled for sync"
+                },
+                "Source": {
+                    "type": "string",
+                    "title": "System/App title",
+                    "description": "Primary source of data",
+                    "enum": [
+                        "AD",
+                        "AzureAD",
+                        "SULU",
+                        "Graph",
+                        "Custom"
+                    ]
+                },
+                "SourceProperty": {
+                    "type": "string",
+                    "title": "System/App property internal name",
+                    "description": "Internal name of property to be synced"
+                },
+                "CustomValue": {
+                    "type": "string",
+                    "title": "Custom value",
+                    "description": "Custom value string"
+                },
+                "Destination": {
+                    "type": "array",
+                    "title": "Destination systems",
+                    "description": "Array of systems consuming source property",
+                    "items": {
+                        "$ref": "#/definitions/DestinationItem"
+                    }
+                }
+            },
+            "required": [
+                "Name",
+                "Enabled"
+            ]
+        },
+        "DestinationItem": {
+            "$id": "#/definitions/DestinationItem",
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string",
+                    "title": "System/Application Name",
+                    "enum": [
+                        "AD",
+                        "AzureAD",
+                        "SharePointOnline",
+                        "Graph"
+                    ]
+                },
+                "Enabled": {
+                    "type": "boolean",
+                    "title": "Enabled for sync",
+                    "description": "If property if Enabled for sync"
+                },
+                "Properties": {
+                    "type": "array",
+                    "title": "Destination properties",
+                    "description": ""
+                }
+            },
+            "required": [
+                "Name"
+            ]
+        }
+    },
+    "properties": {
+        "UserProperties": {
+            "$id": "#/properties/UserProperties",
+            "type": "array",
+            "title": "User properties array",
+            "items": {
+                "$ref": "#/definitions/PropertyItem"
+            },
+            "default": []
+        }
+    }
+}
